@@ -1,0 +1,6 @@
+#Prompt 1:
+
+Create a complete Databricks project using Medallion Architecture (Bronze, Silver, Gold) for Gym Member Exercise Tracking Analytics. Load data from CSV files into the Bronze layer, perform data cleaning and transformations in the Silver layer, create business KPIs and aggregations in the Gold layer, and generate SQL/PySpark code for each step. Include calculations for Total Members, Average Calories Burned, Maximum Calories Burned, Workout Type Analysis, Gender Distribution, Experience Level Analysis, and Session Duration Analysis.
+
+
+Generate a Databricks Dashboard for the Gym Member Exercise Tracking project. Create KPI cards, bar charts, and pie charts using Gold/Silver layer data. Provide explanations for dashboard design, business objectives, testing methodology, automatic dashboard refresh validation after inserting new records, project documentation, screenshots required for submission, and interpretation of all visualizations and KPIs.
