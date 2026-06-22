@@ -10,7 +10,7 @@ CREATE TABLE sales (
     order_date DATE
 );
 
-SELECT * FROM sales;
+
 
 INSERT INTO sales VALUES
 (1,'Laptop',5,5000,'2026-01-10'),
