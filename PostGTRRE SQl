@@ -1,0 +1,48 @@
+psql -U postgres
+#create table
+CREATE DATABASE supplychain;
+#create table sales
+CREATE TABLE sales (
+    order_id INT,
+    product_name VARCHAR(100),
+    quantity INT,
+    sales_amount DECIMAL(10,2),
+    order_date DATE
+);
+
+SELECT * FROM sales;
+
+INSERT INTO sales VALUES
+(1,'Laptop',5,5000,'2026-01-10'),
+(2,'Mouse',20,400,'2026-02-15'),
+(3,'Keyboard',15,750,'2026-03-10'),
+(4,'Monitor',10,2500,'2026-04-20');
+
+SELECT * FROM sales;
+
+product_id,product_name,stock
+101,Laptop,50
+102,Mouse,120
+103,Keyboard,80
+104,Monitor,30
+ #upload csv file 
+
+ inventory.csv
+ # load csv files into databricks
+ df = spark.read.csv("/Volumes/.../inventory.csv",
+                    header=True,
+                    inferSchema=True)
+
+display(df)
+ #connect databricks to postgresql
+ jdbc_url = "jdbc:postgresql://HOST:5432/supplychain"
+
+df_sales = spark.read \
+    .format("jdbc") \
+    .option("url", jdbc_url) \
+    .option("dbtable", "sales") \
+    .option("user", "postgres") \
+    .option("password", "YOUR_PASSWORD") \
+    .load()
+
+display(df_sales)
