@@ -1,0 +1,61 @@
+-- =========================================================================
+-- SYSTEM SETUP: GYM MEMBERS EXERCISE TRACKING DATABASE
+-- Description: Schema definition and sample records for fitness analysis.
+-- =========================================================================
+
+-- 1. DROP TABLE IF EXISTS (Useful for clean re-runs during testing)
+DROP TABLE IF EXISTS gym_members_analysis;
+
+-- 2. CREATE TABLE STRUCTURE
+-- Column data types are optimized to handle decimal metrics and missing values (NULLs)
+CREATE TABLE gym_members_analysis (
+    id SERIAL PRIMARY KEY,
+    age NUMERIC(4,1),
+    gender VARCHAR(15),
+    weight_kg NUMERIC(5,2),
+    height_m NUMERIC(4,2),
+    max_bpm INT,
+    avg_bpm NUMERIC(4,1),
+    resting_bpm NUMERIC(4,1),
+    session_duration_hours NUMERIC(4,2),
+    calories_burned NUMERIC(6,1),
+    workout_type VARCHAR(20),
+    fat_percentage NUMERIC(4,1),
+    water_intake_liters NUMERIC(3,1),
+    workout_frequency_days_per_week INT,
+    experience_level INT,
+    bmi NUMERIC(4,2)
+);
+
+-- 3. POPULATE DATA
+-- Records map precisely to your tracking dataset logs, handling empty rows gracefully with NULL
+INSERT INTO gym_members_analysis 
+    (age, gender, weight_kg, height_m, max_bpm, avg_bpm, resting_bpm, session_duration_hours, calories_burned, workout_type, fat_percentage, water_intake_liters, workout_frequency_days_per_week, experience_level, bmi)
+VALUES
+    (34.0, 'Female', 86.7, 1.86, 174, 152.0, 74.0, 1.12, 712.0,  'Strength', 12.8, 2.4, 5, 2, 14.31),
+    (26.0, 'Female', 84.7, 1.83, 166, 156.0, 73.0, 1.00, 833.0,  'Strength', 27.9, 2.8, 5, 2, 33.49),
+    (22.0, 'Male',   64.8, 1.85, 187, 166.0, 64.0, 1.24, 1678.0, 'Cardio',   28.7, 1.9, 3, 2, 12.73),
+    (54.0, 'Female', 75.3, 1.82, 187, 169.0, 58.0, 1.45, 628.0,  'Cardio',   31.8, 2.4, 4, 1, 20.37),
+    (34.0, 'Female', 52.8, 1.74, 177, 169.0, 66.0, 1.00, 720.0,  'HIIT',     25.0, 2.1, 4, 3, 17.44),
+    (46.0, 'Female', 49.2, 1.50, 184, 120.0, 73.0, 2.00, 832.0,  'Yoga',     25.9, 3.3, 3, 1, 15.31),
+    (51.0, 'Male',   47.1, 2.00, 177, 163.0, 65.0, 1.29, 1140.0, 'Yoga',     21.9, 2.8, 5, 1, 14.85),
+    (36.0, 'Male',   80.8, 1.91, 184, NULL,  59.0, 0.99, 780.0,  'HIIT',     23.6, 3.3, 4, 2, 18.61),
+    (51.0, 'Male',   80.8, 2.00, 167, 129.0, 55.0, 1.52, 1454.0, 'Cardio',   33.9, 1.6, 3, 1, 12.58),
+    (59.0, 'Female', 85.7, 1.60, 182, 140.0, 72.0, 2.00, 1243.0, 'Yoga',     33.4, 1.5, 4, 3, 33.48);
+
+-- =========================================================================
+-- DATA VALIDATION & INSIGHT QUERIES (Include these for testing verification)
+-- =========================================================================
+
+-- Verification 1: Confirm total record insertion count
+SELECT COUNT(*) AS total_records_inserted FROM gym_members_analysis;
+
+-- Verification 2: Analyze average calories burned and heart rate per workout type
+SELECT 
+    workout_type,
+    ROUND(AVG(calories_burned), 2) AS avg_calories,
+    ROUND(AVG(avg_bpm), 1) AS avg_heart_rate,
+    COUNT(*) AS total_sessions
+FROM gym_members_analysis
+GROUP BY workout_type
+ORDER BY avg_calories DESC;
